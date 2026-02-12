@@ -1,0 +1,43 @@
+# Training hyperparameters for SID-1 reproduction on MuSiQue.
+
+model:
+  name: Qwen/Qwen3-4B
+  # Scale to Qwen/Qwen3-14B once the pipeline works.
+
+grpo:
+  group_size: 8             # Number of rollouts per question
+  clip_epsilon: 0.2         # PPO-style clipping
+  kl_coeff: 0.01            # KL penalty coefficient
+
+training:
+  learning_rate: 1.0e-6
+  batch_size: 4             # Questions per batch (each generates group_size rollouts)
+  epochs: 3                 # Over the question dataset
+  max_grad_norm: 1.0
+  warmup_ratio: 0.05
+  weight_decay: 0.01
+  log_interval: 10          # Steps between logging
+
+environment:
+  max_turns: 8              # Max interaction turns per episode
+  max_tokens: 4096          # Token budget for generation
+  search_top_k: 10
+
+length_scheduling:
+  initial_max_tokens: 2048
+  final_max_tokens: 8192
+  warmup_steps: 500         # Linearly increase over this many steps
+
+reward:
+  ndcg_weight: 0.9
+  format_weight: 0.1
+
+data:
+  corpus_dir: artifacts/corpus
+  train_split: train
+  eval_split: dev
+
+vllm:
+  tensor_parallel_size: 1
+  gpu_memory_utilization: 0.85
+  max_model_len: 8192

@@ -1,0 +1,21 @@
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Artifacts (data, models, results)
+artifacts/
+checkpoints/
+results/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Environment
+.env
+*.venv/
+venv/

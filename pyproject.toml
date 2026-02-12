@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "sid1-repro"
+version = "0.1.0"
+description = "Reproduction of SID-1 agentic retrieval with MuSiQue dataset"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.1",
+    "transformers>=4.40",
+    "vllm>=0.6",
+    "trl>=0.8",
+    "faiss-cpu",
+    "sentence-transformers",
+    "datasets",
+    "numpy",
+    "pyyaml",
+]
+
+[project.optional-dependencies]
+gpu = ["faiss-gpu"]
+dev = ["pytest", "ruff"]
+
+[tool.setuptools.packages.find]
+include = ["data*", "environment*", "reward*", "training*", "evaluation*"]
